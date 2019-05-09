@@ -44,15 +44,12 @@
                             <tr>
                                 <th>序号</th>
                                 <th>资产类型</th>
-
                                 <th>资产名称</th>
                                 <th>SN</th>
                                 <th>生产商</th>
-                                {#              <th>业务线</th>#}
                                 <th>状态</th>
                                 <th>机房</th>
                                 <th>购买时间</th>
-                                {#              <th>标签</th>#}
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -63,25 +60,17 @@
                                     <td>{{ forloop.counter }}</td>
                                     {% if asset.asset_type == 'server' %}
                                         <td class="text-green text-bold">{{ asset.get_asset_type_display }}</td>
-                                        {#                      <td>{{ asset.server.get_sub_asset_type_display }}</td>#}
                                     {% elif asset.asset_type == "networkdevice" %}
                                         <td class="text-yellow text-bold">{{ asset.get_asset_type_display }}</td>
-                                        {#                      <td>{{ asset.networkdevice.get_sub_asset_type_display }}</td>#}
                                     {% elif asset.asset_type == "storagedevice" %}
                                         <td class="text-blue text-bold">{{ asset.get_asset_type_display }}</td>
-                                        {#                      <td>{{ asset.storagedevice.get_sub_asset_type_display }}</td>#}
                                     {% elif asset.asset_type == "securitydevice" %}
                                         <td class="text-red text-bold">{{ asset.get_asset_type_display }}</td>
-                                        {#                      <td>{{ asset.securitydevice.get_sub_asset_type_display }}</td>#}
                                     {% endif %}
-                                    {#                    {% if asset.asset_type == 'server' %}#}
+
                                     <td><a href="{% url 'assets:detail' asset.id %}">{{ asset.name }}</a></td>
-                                    {#                    {% else %}#}
-                                    {#                        <td>{{ asset.name }}</td>#}
-                                    {#                    {% endif %}#}
                                     <td>{{ asset.sn }}</td>
                                     <td>{{ asset.manufacturer }}</td>
-                                    {#                  <td>{{ asset.business_unit|default_if_none:"-" }}</td>#}
                                     {% if asset.status == 0 %}
                                         <td><label class="label label-success">{{ asset.get_status_display }}</label>
                                         </td>
@@ -99,31 +88,14 @@
                                     {% endif %}
                                     <td>{{ asset.idc|default:"-" }}</td>
                                     <td>{{ asset.purchase_day|date:"Y/m/d " }}</td>
-                                    {#                                    <td><a href="{% url 'assets:add' %}" title="添加"><i#}
-                                    {#                                            class="glyphicon glyphicon-plus"></i></a>#}
-                                    {#                                        <a href="{% url 'assets:edit' asset.id %}" title="修改"><i#}
-                                    {#                                                class="glyphicon glyphicon-pencil"></i></a>#}
-                                    {#                                        <a href="{% url 'assets:del_equipment' asset.id %}"#}
-                                    {#                                           onclick="return delete_data()" title="删除"><i#}
-                                    {#                                                class="glyphicon glyphicon-trash text-danger"></i></a>#}
-                                    <td><a href="#" title="添加"><i
-                                            class="glyphicon glyphicon-plus"></i></a>
-                                        <a href="#" title="修改"><i
+                                    <td>
+                                        <a href="{% url 'assets:add' %}" title="添加"><i
+                                                class="glyphicon glyphicon-plus"></i></a>
+                                        <a href="{% url 'assets:edit' asset.id %}" title="修改"><i
                                                 class="glyphicon glyphicon-pencil"></i></a>
-                                        <a href="#"
+                                        <a href="{% url 'assets:del_asset' asset.id %}"
                                            onclick="return delete_data()" title="删除"><i
                                                 class="glyphicon glyphicon-trash text-danger"></i></a>
-                                        <script language="JavaScript">
-                                            function delete_data() {
-                                                if (confirm('您确定要删除吗？')) {
-                                                    return true;
-                                                } else {
-                                                    return false;
-                                                }
-                                            }
-                                        </script>
-
-
                                     </td>
                                 </tr>
                             {% empty %}
@@ -131,22 +103,6 @@
                             {% endfor %}
 
                             </tbody>
-                            <tfoot>
-                            <tr>
-                                <th>序号</th>
-                                <th>资产类型</th>
-
-                                <th>资产名称</th>
-                                <th>SN</th>
-                                <th>生产商</th>
-                                {#              <th>业务线</th>#}
-                                <th>状态</th>
-                                <th>机房</th>
-                                <th>购买时间</th>
-                                {#              <th>标签</th>#}
-                                <th>操作</th>
-                            </tr>
-                            </tfoot>
                         </table>
                     </div>
                     <!-- /.box-body -->
@@ -200,7 +156,7 @@
                     'sSearch': "搜索",
                     "info": "显示 _START_ 到 _END_ 页共 _TOTAL_ 条",
                     "infoEmpty": "显示 0 到 0 页共 0 条",
-                    "lengthMenu": '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+"显示 _MENU_ 条",
+                    "lengthMenu": '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + "显示 _MENU_ 条",
                     "zeroRecords": "没有匹配项",
                     "paginate": {
                         "first": "First",
@@ -232,6 +188,14 @@
 
 
         });
+
+        function delete_data() {
+            if (confirm('您确定要删除吗？')) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 
     </script>
 {% endblock %}

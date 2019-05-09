@@ -10,4 +10,7 @@ urlpatterns = [
     url(r'^login/$', views.login, name='login'),
     url(r'^logout/$', views.logout, name='logout'),
     url(r'^dashboard/$', views.dashboard, name='dashboard'),
+    url(r'^add/$', views.add, name='add'),
+    url(r'^edit/(\d+)/$', views.edit, name='edit'),
+    url(r'^del_asset/(\d+)/$', views.del_asset, name='del_asset'),
 ]
